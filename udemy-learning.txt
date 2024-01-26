@@ -1,0 +1,273 @@
+web services:
+1. Designed for the machine to machine or application to application interaction
+2. should be interoperable - platform independent.
+3. should allow communication over a internet.
+
+json javascript object notation. it is format using this we can communicate over webservices;
+
+All the request first goes to the dispatcher sevelets root and the dispatcher servelts than map to right controller services.
+
+these all things can be done by the help of the dispatcherserveletsautoconfiguration
+
+
+request method for the restAPI.
+we make get request from the browser.
+GET method used for the retrive all the resourse available.
+POST method used for the add resourse.
+PUT method used for the update the exixting record.
+PATCH method used for the update the small part of the exixting resourse.
+DELETE method used for the delete r=the resourses
+
+
+lets make application
+1.if wanted to retrive the all users record.
+GET/users.
+2.if wanted add resourse to the users.
+POST/users
+3.if wanted to retrive the single users form the records.
+GET/users/{id}   -> users/{1}.
+4.if wanted to delete single user from the records.
+DELETE/users/{id}   ->users/{1}
+
+  POSTRestAPI 
+  retrive all the post from the users.
+  GET/users/{id}/posts.
+  create a post for a users.
+  POST/users/{id}/posts.
+  retrive details of a post.
+  GET/users/{id}/posts/{post_id}
+  
+  
+  
+ Response status for the REST API.
+ 
+ Resourse not found ->  404.
+ server exception -. 500.
+ validation error 400.
+ 
+ Sucess response 200.
+ Created response 201.
+ No content 204.
+ Unauthorized 401.
+ Bad Request 400.
+ Resourse not found 404.
+ server error 500.
+ 
+ 
+ 
+ Rest API documentation
+ 1.Resourses
+ 2.Actions
+ 3.Request/Response structure(constraints ans validtion)
+ challenges.
+ accuracy:
+ 1.how do ensure that your documentation is upto date an correct and accurate?
+ 2.Consistency: you might have 100s Rest API in an enterpise. how do you ensure the consistency?
+ 
+ manually maintain documentation
+  1. addditinal effort to make in sync with code.
+  2. generate form code
+  
+  
+  
+  
+Advanced RestAPI. 
+1. documentation.
+2. contentNegotiation.
+3. Internationalisation
+4. versioning
+5. HATEOAS
+6. static filtering.
+7. dynamic filtering.
+8. Montering.
+
+SPRINGDOC - OPENAI DEPENDENCY. documentation
+1.swagger specification and swagger tools were introduced.
+2.swgger ui use to interact and visualize with rest api.
+
+CONTENT NEGOTIATION.
+SAME RESOURCES--SAME URI
+	However diffrent responsibilites are possible.
+		diffrent:diffrent content type JSON AND XML RESPONSE CAN BE THERE.
+		diffrent lanaguage : english and dutch CAN BE Response FORM SERVER.
+How can a consumer tell a rest api provider what they want or not.
+content negotiation.
+EXAMPLE: except header(MIME TYPES APPLICATION/XML , APPLICATION/JSON).
+
+i18n internationalization.
+rest api might have consumer form the other world.
+how to customize to the user for the better expersinnece.
+	typically http accept request header-accpet the language.
+		accpet language - indicates natural lanaguage AND LOCATE THE CONSUMER PREFERS.
+		EN FOR ENGLISH.
+		NL DUTCH.
+		FR FRENCH.
+Versioning RESTAPI
+
+version 1,
+{
+name:bob charlie
+}
+
+Breaking changes requires now need to implements the below split the name into two as first and lastname;
+dont implements the changes directly into the production. if somebody using the above one will get effeted by below is changes are
+done abruptly.
+
+version 2,
+{
+firstname:bob
+lastname:charlie.
+}
+
+-->different ways to implements the version.
+1. Make different url for different versioning. as example v1 as old url and v2 as the second or new url.
+//please check into the versioningpersoncontroller.java for more specification.
+2. Request parameters.
+3. Header.
+4. Media Type.
+
+
+
+HATEOAS--> hypermedia as the engine of application state.
+     Websites allow us to..
+		1. See the data and perform actions.(using links).
+		2. about enhancing your rest api to tell consumers how to perform subsequent actions?
+		{
+		"name":
+		"birthdate":
+		"links":{
+		  "all-users":{
+		    "href":"https://localhost:8080/users"   // this is the subsequent action on those resourses.
+			}
+		  }
+		}
+		
+		.HATEOAS
+		
+		Implementation options:
+			1.making custom format and Implementation. adding resourse in the class as per output required.
+				difficult to maintain.
+			2.use standard implemetation.
+				-HAL (JSON hypertext application language) spring format provides us the consistency and easy way to hyperlink the 
+					resourse in api.
+			
+				-spring hateoas: generate hal responses with hyperlink to resourse.
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+microservices with docker.
+1. Built different different small microservices with using different programming languages like go,java,python,javascript etc.
+microservices say likes-> movieservices,customerservices,bookingservices,beverageservices,reviewservices,etc connected to the 
+different databases. say DB1,DB2,DB3....etc
+
+deployment of these become difficult and complex.
+docker provides common ways to deploys the all the microservices.	
+
+docker.
+ 1.create docker images for every microservices.
+ 2.docker images contains everythings a microservices need to run.
+		(application runtime (JDK or jar for java and pyhton etc)).
+		 application code.
+		 dependencies.
+ 3.you can run these docker containers the same ways infrastructure.
+      your local machine.
+	  corporate data centre.
+	  cloud.
+	  
+Docker hub is public registry.
+    Inside that private repositories there is our application present.
+	Image is static template a set of bytes and container is running version.
+	
+	A command to remember.
+	docker run -p 5000:5000 in28min/todo-rst-api-1.0.0.RELEASE...
+			   -p{HostPort}:{containerport}.  internal network bridge...
+			    Image is like a class and container is like object...
+	
+	docker run -p 5000:5000 -d in28min/todo-rst-api-1.0.0.RELEASE...	 
+				->if wanted to run the container in background dont wanted to kill if ctrl c is press.here -d stands for detach.
+    			if wanted to see docker logs.  use [docker logs code generated] after this.
+				if wanted to tails the docker logs then use [docker logs -f]
+	docker containers ls will give us uprunning dockers.
+	docker containers ls -a will show up all containers.
+	docker containers stop id will be used to stop containrers.
+	
+	
+	
+	docker architecture.
+	                           docker client
+			                   docker deamon
+				containers     Local images      Image registry
+				
+				docker client is where we run the commmand.
+				docker deamon is which is used to handled the command after the cleint
+				docker deamon is responsible for pulling the image from the registry, managing the container and managing the local images.
+				latest tag might not to be the most recent and might not be even present sometimes!.
+				
+				
+				docker pull mysql --> its download the Image from the registry to local.
+				docker run --> It basically check if it is available in local or not, pull from registry and create the container.
+				docker search mysql to check if its is available or not.
+				
+				docker image history id.  We will get the all the history of the images step involved in creating the images.
+				docker image inspect.
+				docker image remove id.   It will remove image from the local not from the registry.
+				
+				docker run actually we are doing docker container run.
+				docker container pause idhere.   we can pause using this .
+				docker container unpause idhere. we can unpause using this.
+				docker container inspect idhere. if any things not working here can be checked here.
+				
+				docker conatiner ls -a   --> list down all the container in running as well as exited state.
+				
+				docker container prune --> This will remove all conatiner in exited state.2
+				--> after this prune -->  docker container ls -a will bring only the running container.
+				
+				docker container logs -f idhere.
+				then ->  docker container stop -> here doing this container will be given time shutting the application gracefully.
+				stop --> SIGTERM -> gracefull shutdown.
+				
+				docker container kill -> it will immediately terminates process without stoping anything.
+				
+				
+				restart mode in docker desktop.
+				docker container -p 5000:5000 -d --restart=always in28min/todo-rst-api-1.0.0.RELEASE
+				
+				
+				
+				docker events  -> its helps us see the events happeing with the conatiner
+				docker top --> it provide the top running process of the container.
+				docker stats --> will bring all the information of the container.like cpu usage and etc.
+									
+				distribution cpu usgae.
+				docker container -p 5001:5000 -m -512m --cpu-quota 50000 -d in28min/todo-rst-api-1.0.0.RELEASE
+				docker system df--> wht are resourse are managed by docker deamon.
+
+
+why u should teach other any things which u have learned.
+				
+enhances underrstanding--> teaching 
+build confidence
+encourage learning
+fosters empathy
+Improves communication skills
+				
+	
+
+	
+	
+		
+ 
